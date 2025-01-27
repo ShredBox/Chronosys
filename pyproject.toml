@@ -5,13 +5,11 @@ description = "A Python library for creating and managing JSON files for informa
 authors = [
     { name = "Jacob Allen", email = "jacob@shredbox.com" }
 ]
-license = "MIT"
 readme = "README.md"
 keywords = ["json", "storage"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
