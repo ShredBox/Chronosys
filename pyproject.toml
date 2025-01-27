@@ -1,5 +1,5 @@
 [project]
-name = "JSONStorage"
+name = "Chronosys"
 version = "0.1.0"
 description = "A Python library for creating and managing JSON files for information storage and retrieval."
 authors = [

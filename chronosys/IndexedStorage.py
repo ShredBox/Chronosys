@@ -1,10 +1,10 @@
 from collections import defaultdict
 from typing import Dict, List, Any, Tuple
 
-from jsonstorage import JSONStorage
+from chronosys import Chronosys
 
 
-class IndexedStorage(JSONStorage):
+class IndexedStorage(Chronosys):
     """Base class adding indexing capabilities to JsonStorage"""
 
     def __init__(self, filename: str = "config.json", encoder_cls=None):

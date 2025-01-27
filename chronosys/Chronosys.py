@@ -9,14 +9,14 @@ from typing import Any, Dict
 
 from filelock import FileLock
 
-from jsonstorage import StorageJSONEncoder
+from chronosys import StorageJSONEncoder
 
 
 class StorageException(Exception):
     pass
 
 
-class JSONStorage:
+class Chronosys:
     """Thread-safe JSON storage system with versioning and backup capabilities"""
 
     def __init__(

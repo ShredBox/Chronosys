@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Any
 
 
-class StorageJSONEncoder(json.JSONEncoder):
+class ChronosysEncoder(json.JSONEncoder):
     def default(self, obj: Any) -> Any:
         if isinstance(obj, datetime):
             return {"__datetime__": True, "value": obj.isoformat()}
