@@ -5,7 +5,7 @@ description = "A Python library for creating and managing JSON files for informa
 authors = [
     { name = "Jacob Allen", email = "jacob@shredbox.com" }
 ]
-license = "MIT"
+license = "GPL-3.0"
 readme = "README.md"
 keywords = ["json", "storage"]
 classifiers = [
