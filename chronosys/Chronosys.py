@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 import threading
+import uuid
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
@@ -9,11 +10,35 @@ from typing import Any, Dict
 
 from filelock import FileLock
 
-from chronosys import StorageJSONEncoder
-
 
 class StorageException(Exception):
     pass
+
+
+class ChronosysEncoder(json.JSONEncoder):
+    def default(self, obj: Any) -> Any:
+        if isinstance(obj, datetime):
+            return {"__datetime__": True, "value": obj.isoformat()}
+        if isinstance(obj, uuid.UUID):
+            return {"__uuid__": True, "value": str(obj)}
+        if hasattr(obj, "__dict__"):
+            return {"__class__": obj.__class__.__name__, "value": obj.__dict__}
+        return super().default(obj)
+
+
+class ChronosysDecoder(json.JSONDecoder):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(object_hook=self.object_hook, *args, **kwargs)
+
+    def object_hook(self, dct: Dict[str, Any]) -> Any:
+        if "__datetime__" in dct:
+            return datetime.fromisoformat(dct["value"])
+        if "__uuid__" in dct:
+            return uuid.UUID(dct["value"])
+        if "__class__" in dct:
+            return type(dct["__class__"], (), dct["value"])
+        return dct
 
 
 class Chronosys:
@@ -30,7 +55,7 @@ class Chronosys:
         self.filename = Path(filename)
         self.backup_count = backup_count
         self.indent = indent
-        self.encoder = encoder_cls or StorageJSONEncoder
+        self.encoder = encoder_cls or ChronosysEncoder
         self.lock = FileLock(f"{filename}.lock", timeout=10)
         self.memory_cache: Dict[str, Any] = {}
         self.cache_lock = threading.Lock()
